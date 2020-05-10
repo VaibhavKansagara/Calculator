@@ -25,26 +25,25 @@ pipeline {
   }
 
 
-  stage('DockerHub') {
-
-      stages{
-        stage('Build Image') {
-          steps{
-            script {
-              dockerImage = docker.build registry + ":$BUILD_NUMBER"
+    stage('DockerHub') {
+        stages{
+          stage('Build Image') {
+            steps{
+              script {
+                dockerImage = docker.build registry + ":$BUILD_NUMBER"
+              }
             }
           }
-        }
-        stage('Push Image') {
-          steps{
-            script {
-              docker.withRegistry( '', registryCredential ) {
-                dockerImage.push()
+          stage('Push Image') {
+            steps{
+              script {
+                docker.withRegistry( '', registryCredential ) {
+                  dockerImage.push()
+                }
               }
             }
           }
         }
-      }
     }
     stage('Deploy') {
       agent any
@@ -59,6 +58,4 @@ pipeline {
         }
       }
     }
-}
-
 }
