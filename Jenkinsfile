@@ -22,9 +22,6 @@ pipeline {
         sh 'mvn test'
       }
     }
-  }
-
-
     stage('DockerHub') {
         stages{
           stage('Build Image') {
@@ -58,4 +55,5 @@ pipeline {
         }
       }
     }
+  }
 }
